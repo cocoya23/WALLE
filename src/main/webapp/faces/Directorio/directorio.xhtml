@@ -1,0 +1,362 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <title>Directorio</title>
+        <ui:include src="/faces/head.xhtml"/>
+    </h:head>
+    <h:body>
+        <ui:include src="/faces/menu.xhtml"/>
+        <h:form id="formDirectorio">
+            <p:fieldset legend="Resumen CGC" toggleable="true" collapsed="true">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputText value="Estado: "/>  
+                    <p:selectOneButton value="#{directorio.showBajas}" >  
+                        <f:selectItem itemLabel="Activos" itemValue="false"/>  
+                        <f:selectItem itemLabel="Bajas anteriores" itemValue="true"/>
+                    </p:selectOneButton>  
+                </h:panelGrid>
+                <p:separator />
+                <h:panelGrid columns="11" cellpadding="5">
+                    <h:outputText value="Organizaciones:" /> 
+                    <p:selectOneMenu >  
+                        <f:selectItem itemLabel="Selecciona una Organización" itemValue="" /> 
+                    </p:selectOneMenu>
+                    <p:separator />
+                    <h:outputText value="Cargos en el CGC de la Organización:" /> 
+                    <p:selectOneMenu >  
+                        <f:selectItem itemLabel="Elige un Cargo" itemValue="" /> 
+                    </p:selectOneMenu>
+                    <p:separator />
+                    <h:outputText value="Integrantes en la Organización:" /> 
+                    <p:selectOneMenu >  
+                        <f:selectItem itemLabel="Elige un Integrante" itemValue="" /> 
+                    </p:selectOneMenu>
+                    <p:separator />
+                    <h:outputText value="Cargo en la Organización:" /> 
+                    <h:outputText value="Cargo" />
+                </h:panelGrid>
+            </p:fieldset>
+            <table style="width: 100%;">
+                <tr>
+                    <td style="width: 60%; vertical-align: top;">
+                        <p:toolbar styleClass="toolBar">
+                            <p:toolbarGroup align="left">
+                                <p:commandButton value="Agregar Organización" icon="ui-icon-plusthick" onclick="cuOrganizacionDialog.show()"/>
+                                <p:commandButton value="Remover" icon="ui-icon-minusthick" />
+                                <p:commandButton value="Modificar" icon="ui-icon-pencil" onclick="cuOrganizacionDialog.show()"/>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                        <p:dataTable var="organizacion" value="#{directorio.organizaciones}" rowKey="#{organizacion.idOrganizacion}" selectionMode="single"
+                                     selection="#{directorio.selectedOrganizacion}" id="organizacionesTable" emptyMessage="Sin organizaciones">
+
+                            <f:facet name="header">
+                                Organizaciones
+                            </f:facet>
+
+                            <p:column headerText="Razon Social">
+                                <h:outputText value="#{organizacion.razonSocial}"/>
+                            </p:column>
+
+                            <p:column headerText="Tipo">
+                                <h:outputText value="#{organizacion.tipoOrganizacion}"/>
+                            </p:column>
+
+                            <p:column headerText="Sector">
+                                <h:outputText value="#{organizacion.sector}"/>
+                            </p:column>
+
+                            <p:column headerText="Subsector">
+                                <h:outputText value="#{organizacion.subsector}"/>
+                            </p:column>
+
+                        </p:dataTable>
+                    </td>
+                    <td style="width: 40%; vertical-align: top;">
+                        <p:toolbar styleClass="toolBar">
+                            <p:toolbarGroup align="left">
+                                <p:commandButton value="Agregar Integrante" icon="ui-icon-plusthick" onclick="cuIntegranteDialog.show()"/>
+                                <p:commandButton value="Remover" icon="ui-icon-minusthick" />
+                                <p:commandButton value="Modificar" icon="ui-icon-pencil" onclick="cuIntegranteDialog.show()"/>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                        <p:dataTable var="integrante" value="#{organizacion.integrantes}" rowKey="#{integrante.idIntegrante}" id="integrantesTable"
+                                     emptyMessage="Sin Integrantes">
+
+                            <f:facet name="header">
+                                Integrantes
+                            </f:facet>
+
+                            <p:column headerText="Nombre">
+                                <h:outputText value="#{integrante.nombres} #{integrante.paterno} #{integrante.materno}"/>
+                            </p:column>
+
+                            <p:column headerText="Cargo en el comite">
+                                <h:outputText value="#{integrante.cargoComite}"/>
+                            </p:column>
+
+                            <p:column headerText="Cargo en la organización">
+                                <h:outputText value="#{integrante.cargoOrganizacion}"/>
+                            </p:column>
+
+                        </p:dataTable>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+        <h:form id="formOrganización">
+            <p:dialog id="CU" header="Organización" modal="true" resizable="false" widgetVar="cuOrganizacionDialog" height="500">
+                <div class="columnas pares">
+                    <p:panel header="Información general">
+                        <h:panelGrid columns="2" cellpadding="5" >
+                            <h:outputLabel value="Razon Social:" />  
+                            <p:inputText required="true" />  
+
+                            <h:outputLabel value="Pagina web:" />  
+                            <p:inputText />
+
+                            <h:outputLabel value="Tipo de Organización:" />  
+                            <p:selectOneMenu required="true" >
+                                <f:selectItem itemLabel="Elige un tipo" itemValue="" /> 
+                            </p:selectOneMenu>
+
+                            <h:outputLabel value="Sector:" />  
+                            <p:selectOneMenu required="true" >
+                                <f:selectItem itemLabel="Elige un sector" itemValue="" /> 
+                            </p:selectOneMenu>
+
+                            <h:outputLabel value="Subsector:" />  
+                            <p:selectOneMenu required="true" >
+                                <f:selectItem itemLabel="Elige un subsector" itemValue="" /> 
+                            </p:selectOneMenu>
+
+                            <h:outputLabel value="Numero de empleados:" />  
+                            <p:spinner min="0"/>
+
+                        </h:panelGrid>
+                    </p:panel>
+                    <p:panel header="Sindicato" id="panelSindicato">
+                        <h:outputLabel value="Es un sindicato:" />  
+                        <p:selectOneButton value="#{directorio.showEsSindicato}">
+                            <f:selectItem itemLabel="No" itemValue="false" />
+                            <f:selectItem itemLabel="Si" itemValue="true" />
+                            <p:ajax update="panelSindicato"/>
+                        </p:selectOneButton>
+                        <h:panelGrid columns="2" cellpadding="5" rendered="#{directorio.showEsSindicato}">
+                            <h:outputLabel value="Organismo, Union o Federación al que se encuentra afiliado:" />
+                            <p:inputText required="true" />
+
+                            <h:outputLabel value="Nombre del Presidente/Secretario de la Organización Sindical:" />
+                            <p:inputText required="true" />
+
+                            <h:outputLabel value="Numero de secciones:" />
+                            <p:spinner min="0"/>
+
+                            <h:outputLabel value="Total de Trabajadores afiliados a la Organización Sindical:" />
+                            <p:spinner min="0"/>
+
+                        </h:panelGrid>
+                        <br/>
+                        <h:outputLabel value="Tiene sindicato:" />
+                        <p:selectOneButton value="#{directorio.showTieneSindicato}">
+                            <f:selectItem itemLabel="No" itemValue="false" />
+                            <f:selectItem itemLabel="Si" itemValue="true" />
+                            <p:ajax update="panelSindicato"/>
+                        </p:selectOneButton>
+                        <h:panelGrid columns="2" cellpadding="5" rendered="#{directorio.showTieneSindicato}">
+                            <h:outputLabel value="Razón social:" />
+                            <p:inputText required="true" />
+
+                            <h:outputLabel value="Titular:" />
+                            <p:inputText required="true" />
+
+                            <h:outputLabel value="No. de personas de la organización sindicalizadas:" />
+                            <p:spinner min="0"/>
+
+                        </h:panelGrid>
+                    </p:panel>
+                </div>
+                <div class="columnas pares">
+                    <p:panel header="Domicilio">
+                        <h:outputLabel value="Extrajero:" />  
+                        <p:selectOneButton value="false">
+                            <f:selectItem itemLabel="No" itemValue="false" />
+                            <f:selectItem itemLabel="Si" itemValue="true" />
+                            <p:ajax />
+                        </p:selectOneButton>
+                        <h:panelGrid columns="2" cellpadding="5" >
+                            <h:outputLabel value="Calle:" />
+                            <p:inputText required="true" />
+
+                            <h:outputLabel value="No. ext:" />
+                            <p:inputText required="true" />
+
+                            <h:outputLabel value="No. int:" />
+                            <p:inputText />
+
+                            <h:outputLabel value="Colonia:" />
+                            <p:inputText required="true" />
+
+                            <h:outputLabel value="Municipio/Delegación:" />
+                            <p:inputText required="true" />
+
+                            <h:outputLabel value="Entidad Federativa:" />
+                            <p:inputText required="true" />
+
+                            <h:outputLabel value="C.P.:" />
+                            <p:inputText required="true" />
+
+                        </h:panelGrid>
+                    </p:panel>
+                    <p:panel header="Asociaciones" id="panelAsociaciones">
+                        <h:outputLabel value="Es una asociación:" />  
+                        <p:selectOneButton value="#{directorio.showEsAsociacion}">
+                            <f:selectItem itemLabel="No" itemValue="false" />
+                            <f:selectItem itemLabel="Si" itemValue="true" />
+                            <p:ajax update="panelAsociaciones"/>
+                        </p:selectOneButton>
+                        <h:panelGrid columns="2" cellpadding="5" rendered="#{directorio.showEsAsociacion}">
+                            <h:outputLabel value="No. Organizaciones asociadas:" />
+                            <p:spinner min="0"/>
+
+                            <h:outputLabel value="No. Trabajadores asociados:" />
+                            <p:spinner min="0"/>
+
+                        </h:panelGrid>
+                        <br/>
+                        <h:outputLabel value="Pertenece a alguna cámara o asociación:" />
+                        <p:selectOneButton value="#{directorio.showPerteneceCA}">
+                            <f:selectItem itemLabel="No" itemValue="false" />
+                            <f:selectItem itemLabel="Si" itemValue="true" />
+                            <p:ajax update="panelAsociaciones"/>
+                        </p:selectOneButton>
+                        <p:dataTable rendered="#{directorio.showPerteneceCA}" selectionMode="single" id="camaraasociacionTable" emptyMessage="Sin cámara o asociación">
+
+                            <f:facet name="header">
+                                <p:commandButton icon="ui-icon-plus" onclick="cuCADialog.show()"/>
+                                <p:commandButton icon="ui-icon-minus" />
+                                <p:commandButton icon="ui-icon-pencil" onclick="cuCADialog.show()"/>
+                            </f:facet>
+
+                            <p:column headerText="Nombre">
+
+                            </p:column>
+                            <p:column headerText="Titular">
+
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
+                </div>
+                <f:facet name="footer">
+                    <p:commandButton id="btnSaveOrganizacion" type="button" value="Guardar" icon="ui-icon-check" style="margin:0" onclick="cuOrganizacionDialog.hide()"/>
+                </f:facet>
+            </p:dialog>
+        </h:form>
+        <h:form id="formCA">
+            <p:dialog modal="true" widgetVar="cuCADialog" header="Cámara/Asociación" resizable="false" closable="true">
+                <h:panelGrid columns="2" cellpadding="5" >
+                    <h:outputLabel value="Nombre:" />
+                    <p:inputText required="true" />
+
+                    <h:outputLabel value="Titular:" />
+                    <p:inputText required="true" />
+                    
+                    <f:facet name="footer">
+                        <p:commandButton id="btnSaveCA" type="button" value="Guardar" icon="ui-icon-check" style="margin:0" onclick="cuCADialog.hide()"/>
+                    </f:facet>
+
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+        <h:form id="formIntegrante">
+            <p:dialog modal="true" widgetVar="cuIntegranteDialog" header="Cámara/Asociación" resizable="false" closable="true">
+                <div class="columnas pares">
+                    <p:panel header="Datos de contacto">
+                        <h:panelGrid columns="2" cellpadding="5" id="panelIntegrante">
+                            <h:outputLabel value="Nombre(s):" />
+                            <p:inputText required="true" />
+
+                            <h:outputLabel value="Apellido 1:" />
+                            <p:inputText required="true" />
+
+                            <h:outputLabel value="Apellido 2:" />
+                            <p:inputText required="false" />
+
+                            <h:outputText value="Cargo en el CGC:" /> 
+                            <p:selectOneMenu >  
+                                <f:selectItem itemLabel="Elige un Cargo" itemValue="" /> 
+                            </p:selectOneMenu>
+
+                            <h:outputLabel value="Cargo en la organización:" />
+                            <p:inputText required="true" />
+
+                            <h:outputLabel value="Telefono 1:" />
+                            <p:inputText required="true" />
+
+                            <h:outputLabel value="Telefono 2:" />
+                            <p:inputText required="false" />
+
+                            <h:outputLabel value="Correo 1:" />
+                            <p:inputText required="true" />
+
+                            <h:outputLabel value="Correo 2:" />
+                            <p:inputText required="false" />
+
+                        </h:panelGrid>
+                    </p:panel>
+                </div>
+                <div class="columnas pares">
+                    <p:panel id="panelDomicilioIntegrante" header="Domicilio">
+                        <h:outputLabel value="Es diferente al de la organización:" />
+                        <p:selectOneButton value="#{directorio.showDomicilioIntegrante}">
+                            <f:selectItem itemLabel="No" itemValue="false" />
+                            <f:selectItem itemLabel="Si" itemValue="true" />
+                            <p:ajax update="panelDomicilioIntegrante"/>
+                        </p:selectOneButton>
+
+                        <p:panel rendered="#{directorio.showDomicilioIntegrante}">
+                            <h:outputLabel value="Extrajero:" />  
+                            <p:selectOneButton value="false">
+                                <f:selectItem itemLabel="No" itemValue="false" />
+                                <f:selectItem itemLabel="Si" itemValue="true" />
+                                <p:ajax />
+                            </p:selectOneButton>
+                            <h:panelGrid columns="2" cellpadding="5" >
+                                <h:outputLabel value="Calle:" />
+                                <p:inputText required="true" />
+
+                                <h:outputLabel value="No. ext:" />
+                                <p:inputText required="true" />
+
+                                <h:outputLabel value="No. int:" />
+                                <p:inputText />
+
+                                <h:outputLabel value="Colonia:" />
+                                <p:inputText required="true" />
+
+                                <h:outputLabel value="Municipio/Delegación:" />
+                                <p:inputText required="true" />
+
+                                <h:outputLabel value="Entidad Federativa:" />
+                                <p:inputText required="true" />
+
+                                <h:outputLabel value="C.P.:" />
+                                <p:inputText required="true" />
+
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:panel>
+                </div>
+                <f:facet name="footer">
+                    <p:commandButton id="btnSaveCA" type="button" value="Guardar" icon="ui-icon-check" style="margin:0" onclick="cuIntegranteDialog.hide()"/>
+                </f:facet>
+            </p:dialog>
+        </h:form>
+    </h:body>
+</html>
+

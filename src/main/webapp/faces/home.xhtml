@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <title>Walle</title>
+        <ui:include src="/faces/head.xhtml"/>
+    </h:head>
+    <h:body>
+        <ui:include src="/faces/menu.xhtml"/>
+        <c:if test="#{requestScope.errorCode!=null}">
+            <center style="margin-top: 50px">
+                <c:if test="#{requestScope.errorCode.matches('[0-9]+')}">
+                    <img src="#{request.contextPath}/recursos/imagenes/warning.png" width="150px" height="150px" align="middle"/>
+                    <span style="font-size: 50px;color: #999; font-weight: bold;">
+                        <c:if test="#{requestScope.errorCode==403}">
+                            #{requestScope.errorCode} - Acceso denegado.<br/>
+                        </c:if>
+                        <c:if test="#{requestScope.errorCode==404}">
+                            #{requestScope.errorCode} - La pagina que busca no se encontro.<br/>
+                        </c:if>
+                        <c:if test="#{requestScope.errorCode==500}">
+                            #{requestScope.errorCode} - Ocurrio un error al procesar su colicitud.<br/>
+                        </c:if>
+                    </span>
+
+                </c:if>
+                <c:if test="#{requestScope.errorCode.equals('build')}">
+                    <img src="#{request.contextPath}/recursos/imagenes/build.jpg" align="middle"/>
+                    <span style="font-size: 50px;color: #999; font-weight: bold;">
+                        Pagina en construcción
+                    </span>                    
+                </c:if>
+            </center>
+        </c:if>        
+
+    </h:body>
+</html>

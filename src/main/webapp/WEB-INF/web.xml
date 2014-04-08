@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <!-- <SPRING CONTEXT> -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            /WEB-INF/applicationContext.xml
+            /WEB-INF/security.xml
+        </param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <!-- </SPRING CONTEXT> -->
+    
+    <!-- <SPRING SECURITY> -->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- </SPRING SECURITY> -->
+     
+   <!-- <SPRING MVC> -->
+    <!--<servlet>
+        <servlet-name>controllers</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>controllers</servlet-name>
+        <url-pattern>/controller/*</url-pattern>
+    </servlet-mapping>-->
+    <!-- </SPRING MVC> -->
+    
+    <!-- <JSF and PrimeFaces> -->
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+    <filter>
+        <filter-name>PrimeFaces FileUpload Filter</filter-name>
+        <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>PrimeFaces FileUpload Filter</filter-name>
+        <servlet-name>Faces Servlet</servlet-name>
+        <dispatcher>FORWARD</dispatcher>
+	<dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <!-- </JSF and PrimeFaces> -->
+    
+    <!-- <Pretty Filter> -->
+    <filter>
+        <filter-name>Pretty Filter</filter-name>
+        <filter-class>com.ocpsoft.pretty.PrettyFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Pretty Filter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>FORWARD</dispatcher> 
+        <dispatcher>REQUEST</dispatcher> 
+        <dispatcher>ERROR</dispatcher>
+        <dispatcher>ASYNC</dispatcher>
+    </filter-mapping>
+    <!-- </Pretty Filter> -->
+    
+    <!-- <PrimeFaces Push> 
+    <servlet>
+        <servlet-name>Push Servlet</servlet-name>
+        <servlet-class>org.primefaces.push.PushServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Push Servlet</servlet-name>
+        <url-pattern>/primepush/*</url-pattern>
+    </servlet-mapping>
+    </PrimeFaces Push> -->
+    
+    <!-- <ERROR PAGES> -->
+    <error-page>
+        <error-code>403</error-code>
+        <location>/errorRedirect.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/errorRedirect.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>405</error-code>
+        <location>/errorRedirect.jsp</location>
+    </error-page>
+    <!-- </ERROR PAGES> -->
+    
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>home</welcome-file>
+    </welcome-file-list>
+</web-app>

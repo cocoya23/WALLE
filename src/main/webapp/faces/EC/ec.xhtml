@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <title>Datos del EC</title>
+        <ui:include src="/faces/head.xhtml"/>
+    </h:head>
+    <h:body>
+        <ui:include src="/faces/menu.xhtml"/>
+        <h:form id="formEC">
+            <p:toolbar styleClass="toolBar" id="ECToolBar">
+                <p:toolbarGroup>
+                    <p:commandButton value="Guardar" icon="ui-icon-disk" />
+                    <p:commandButton value="Exportar a DOC" ajax="false" >  
+                        <p:fileDownload value="#{descargable.archivo}"/>
+                    </p:commandButton>
+                    <p:commandButton value="Exportar a PDF" ajax="false" >
+                        <p:fileDownload value="#{descargable.archivo}"/>
+                    </p:commandButton>
+                    <p:separator/>
+                    <h:outputText value="Estándar de Competencia: "/>
+                    <p:selectOneMenu style="width: 700px;">
+                    </p:selectOneMenu>
+                </p:toolbarGroup>
+            </p:toolbar>
+            <p:sticky target="ECToolBar" margin="40" id="stickyECToolBar"/>
+            <h:panelGrid columns="2" cellpadding="5">
+
+                <h:outputLabel value="Clase de EC:"/>
+                <p:selectOneMenu id="claseEC">  
+                    <f:selectItem itemLabel="Normal" itemValue="1" />  
+                    <f:selectItem itemLabel="De uso restringido" itemValue="2" />  
+                    <f:selectItem itemLabel="Internacional" itemValue="3" />  
+                </p:selectOneMenu>
+
+                <h:outputLabel value="Codigo:"/>
+                <h:outputLabel value="Titulo:"/>
+
+                <p:inputText id="codigo" style="width: 50px;"/>
+                <p:inputText id="titulo" style="width: 500px;"/>
+
+                <h:outputLabel value="Imagen:"/>
+                <p:fileUpload mode="advanced" auto="true" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" fileLimit="1" invalidFileMessage="Solo imagenes" multiple="false" label="Seleccionar"/>
+
+            </h:panelGrid>
+            <h:panelGrid columns="1" cellpadding="5">
+
+                <h:outputLabel value="Proposito del Estándar de Comptencia:"/>
+                <p:inputTextarea id="proposito" rows="5" cols="115"/>
+
+                <h:outputLabel value="El presente Estándar de Competencia es...:"/>
+                <p:inputTextarea id="es" rows="5" cols="115"/>
+
+                <h:outputLabel value="Descripción general del Estándar de Competencia:"/>
+                <p:inputTextarea id="descripcion" rows="5" cols="115"/>
+
+            </h:panelGrid>
+            <h:panelGrid columns="2" cellpadding="5">
+
+                <h:outputLabel value="Periodo de revisión/actualización del EC:"/>
+                <p:spinner id="periodo" size="5" min="1" max="5" suffix=" años" value="4"/>
+
+                <h:outputLabel value="Tiempo de Vigencia del Certificado de competencia en este EC:"/>
+                <p:spinner id="vigencia" size="5" min="1" max="20" suffix=" años" value="20"/>
+
+            </h:panelGrid>
+            <p:panel header="Ocupaciones relacionadas con este EC de acuerdo con el Sistema Nacional de Clasificación de Ocupaciones (SINCO)" style="width: 600px; margin-top: 5px;">
+
+                <h:panelGrid columns="4" cellpadding="5">
+
+                    <h:outputLabel value="Grupo unitario:"/>
+                    <p:selectOneMenu id="grupoUnitario">
+                        <f:selectItem itemLabel="Ejemplo" itemValue="1" />
+                    </p:selectOneMenu>
+
+                    <h:outputLabel value="Ocupaciones asociadas:"/>
+                    <p:selectOneMenu id="ocupacionAsociada">
+                        <f:selectItem itemLabel="Ejemplo" itemValue="1" />
+                    </p:selectOneMenu>
+
+                </h:panelGrid>
+
+                <p:dataTable selectionMode="single" id="camaraasociacionTable" emptyMessage="Sin ocupaciones">
+
+                    <f:facet name="header">
+                        <p:commandButton icon="ui-icon-plus" onclick="ocupacionCADialog.show()"/>
+                        <p:commandButton icon="ui-icon-minus" />
+                        <p:commandButton icon="ui-icon-pencil" onclick="ocupacionCADialog.show()"/>
+                    </f:facet>
+
+                    <p:column headerText="Ocupaciones no contenidas en el Sistema Nacional de Clasificación de Ocupaciones y reconocidas en el Sector para este EC">
+
+                    </p:column>
+                </p:dataTable>
+
+            </p:panel>
+            <p:panel header="Clasificación según el sistema de Clasificación Industrial de América del Norte (SCIAN)" style=" width: 600px; margin-top: 10px;">
+
+                <h:panelGrid columns="6" cellpadding="5">
+
+                    <h:outputLabel value="Sector:"/>
+                    <p:selectOneMenu id="sector">
+                        <f:selectItem itemLabel="Ejemplo" itemValue="1" />
+                    </p:selectOneMenu>
+
+                    <h:outputLabel value="Subsector:"/>
+                    <p:selectOneMenu id="subsector">
+                        <f:selectItem itemLabel="Ejemplo" itemValue="1" />
+                    </p:selectOneMenu>
+
+                    <h:outputLabel value="Rama:"/>
+                    <p:selectOneMenu id="rama">
+                        <f:selectItem itemLabel="Ejemplo" itemValue="1" />
+                    </p:selectOneMenu>
+
+                    <h:outputLabel value="Subrama:"/>
+                    <p:selectOneMenu id="subrama">
+                        <f:selectItem itemLabel="Ejemplo" itemValue="1" />
+                    </p:selectOneMenu>
+
+                    <h:outputLabel value="Clase:"/>
+                    <p:selectOneMenu id="clase">
+                        <f:selectItem itemLabel="Ejemplo" itemValue="1" />
+                    </p:selectOneMenu>
+
+                </h:panelGrid>
+
+            </p:panel>
+
+            <p:panel header="Organizaciones participantes en el desarrollo del Estándar de Competencia" style="width: 600px; margin-top: 10px;">
+
+                <p:dataTable selectionMode="single" id="organizacionesTable" emptyMessage="Sin Organizaciones">
+
+                    <f:facet name="header">
+                        <p:commandButton icon="ui-icon-plus" onclick="ocupacionCADialog.show()"/>
+                        <p:commandButton icon="ui-icon-minus" />
+                        <p:commandButton icon="ui-icon-pencil" onclick="ocupacionCADialog.show()"/>
+                    </f:facet>
+
+                    <p:column headerText="Nombre de la ocupación">
+
+                    </p:column>
+                </p:dataTable>
+
+            </p:panel>
+            
+            <p:panel header="Relación con Estándares de Comptencia" style="width: 600px; margin-top: 10px;">
+                
+                <p:dataTable selectionMode="single" id="equivalentesECTable" emptyMessage="Sin EC">
+
+                    <f:facet name="header">
+                        <p:commandButton icon="ui-icon-plus" onclick="ocupacionCADialog.show()"/>
+                        <p:commandButton icon="ui-icon-minus" />
+                        <p:commandButton icon="ui-icon-pencil" onclick="ocupacionCADialog.show()"/>
+                    </f:facet>
+
+                    <p:column headerText="Equivalentes">
+
+                    </p:column>
+                </p:dataTable>
+                
+                <p:dataTable selectionMode="single" id="relacionadosECTable" emptyMessage="Sin EC">
+
+                    <f:facet name="header">
+                        <p:commandButton icon="ui-icon-plus" onclick="ocupacionCADialog.show()"/>
+                        <p:commandButton icon="ui-icon-minus" />
+                        <p:commandButton icon="ui-icon-pencil" onclick="ocupacionCADialog.show()"/>
+                    </f:facet>
+
+                    <p:column headerText="Relacionados">
+
+                    </p:column>
+                </p:dataTable>
+                
+            </p:panel>
+            
+            <h:panelGrid columns="1" cellpadding="5">
+                
+                <h:outputLabel value="Detalles de la práctica:"/>
+                <p:inputTextarea id="detalles" rows="5" cols="115"/>
+                
+                <h:outputLabel value="Apoyos/Requerimientos:"/>
+                <p:inputTextarea id="apoyos" rows="5" cols="115"/>
+                
+                <h:outputLabel value="Duración estimada de la evaluación"/>
+                <p:outputPanel>
+                    <p:selectOneMenu id="hrsGabinete">
+                        <f:selectItem itemLabel="0.00" itemValue="1" />
+                        <f:selectItem itemLabel="0.30" itemValue="2" />
+                        <f:selectItem itemLabel="1.00" itemValue="3" />
+                        <f:selectItem itemLabel="1.30" itemValue="4" />
+                        <f:selectItem itemLabel="2.00" itemValue="5" />
+                    </p:selectOneMenu>
+                    horas en gabinete y
+                    <p:selectOneMenu id="hrsCampo">
+                        <f:selectItem itemLabel="0.00" itemValue="1" />
+                        <f:selectItem itemLabel="0.30" itemValue="2" />
+                        <f:selectItem itemLabel="1.00" itemValue="3" />
+                        <f:selectItem itemLabel="1.30" itemValue="4" />
+                        <f:selectItem itemLabel="2.00" itemValue="5" />
+                    </p:selectOneMenu>
+                    horas en campo, totalizando 00:00 horas 
+                </p:outputPanel>
+                
+                <h:outputLabel value="Referencias de la información"/>
+                <p:dataTable selectionMode="single" id="equivalentesECTable" emptyMessage="Sin referencias">
+
+                    <f:facet name="header">
+                        <p:commandButton icon="ui-icon-plus" onclick="ocupacionCADialog.show()"/>
+                        <p:commandButton icon="ui-icon-minus" />
+                        <p:commandButton icon="ui-icon-pencil" onclick="ocupacionCADialog.show()"/>
+                    </f:facet>
+
+                    <p:column headerText="Referencia">
+
+                    </p:column>
+                </p:dataTable>
+                
+            </h:panelGrid>
+
+        </h:form>
+        <h:form id="formCA">
+            <p:dialog modal="true" widgetVar="ocupacionCADialog" header="Ocupaciones" resizable="false" closable="true">
+                <h:panelGrid columns="2" cellpadding="5" >
+                    <h:outputLabel value="Ocupación:" />
+                    <p:inputText required="true" />
+
+                    <f:facet name="footer">
+                        <p:commandButton id="btnSaveCA" type="button" value="Guardar" icon="ui-icon-check" style="margin:0" onclick="ocupacionCADialog.hide()"/>
+                    </f:facet>
+
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+    </h:body>
+</html>

@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <link href="#{request.contextPath}/css/EC/mapa.css" type="text/css" rel="stylesheet"/>
+        <title>Mapa Funcional</title>
+        <ui:include src="/faces/head.xhtml"/>
+        <script type="text/javascript" src="#{request.contextPath}/js/html2canvas.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/js/EC/mapa.js"></script>
+        <script type="text/javascript">
+            function addClass() {
+                $('.ui-treenode-content').each(function(i) {
+                    if ($(this).parent().attr('data-nodetype') === '#{mapa.NODO_PROPOSITO_PRINCIPAL}') {
+                        $(this).addClass('pp');
+                    } else if ($(this).parent().attr('data-nodetype') === '#{mapa.NODO_FUNCION_CLAVE}') {
+                        $(this).addClass('fc');
+                    } else if ($(this).parent().attr('data-nodetype') === '#{mapa.NODO_FUNCION_INTERMEDIA}') {
+                        $(this).addClass('ft');
+                    } else if ($(this).parent().attr('data-nodetype') === '#{mapa.NODO_FUNCION_INDIVIDUAL}') {
+                        $(this).addClass('fi');
+                    } else if ($(this).parent().attr('data-nodetype') === '#{mapa.NODO_FUNCION_ELEMENTAL}') {
+                        $(this).addClass('fe');
+                    }
+                });
+            }
+        </script>
+    </h:head>
+    <h:body>
+        <ui:include src="/faces/menu.xhtml"/>
+        <h:form id="mapaForm">
+            <p:toolbar styleClass="toolBar" id="mapaToolBar">
+                <p:toolbarGroup align="left">  
+                    <p:commandButton id="btnAddFuncion" value="Agregar" icon="ui-icon-plusthick" actionListener="#{mapa.prepareAdd()}" update=":ceDialog" oncomplete="dialogoCE.show()" disabled="#{mapa.disabledAddAction}"/>
+                    <p:commandButton value="Remover" icon="ui-icon-minusthick" actionListener="#{mapa.remove()}" update="mapaFuncional" oncomplete="addClass();"/>
+                    <p:commandButton value="Renombrar" icon="ui-icon-pencil" actionListener="#{mapa.prepareRename()}" update=":ceDialog" oncomplete="dialogoCE.show()"/>
+                    <p:separator />
+                    <p:commandButton title="Copiar" icon="ui-icon-copy" actionListener="#{mapa.copy()}" update="mapaFuncional" oncomplete="addClass();"/>
+                    <p:commandButton title="Pegar" icon="ui-icon-clipboard" actionListener="#{mapa.paste()}" update="mapaFuncional" oncomplete="addClass();"/>
+                    <p:separator />
+                    <p:commandButton id="btnEC" value="Definir como EC" actionListener="#{mapa.export()}" update="mapaFuncional" oncomplete="addClass();" disabled="#{mapa.disabledAsECAction}"/>
+                    <p:separator />
+                    <p:commandButton title="Actualizar" icon="ui-icon-refresh" actionListener="#{mapa.updateRoot()}" update="mapaFuncional" oncomplete="addClass();"/>
+                    <p:commandButton value="Exportar" actionListener="#{mapa.export()}" update="mapaFuncional" id="commandExport" oncomplete="toCanvas(); addClass();"/>
+                    <p:commandButton value="Solicitar revisión" actionListener="#{mapa.export()}" update="mapaFuncional" oncomplete="dialogoRevision.show(); addClass();"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+            <p:sticky target="mapaToolBar" margin="40" id="stickyMapaToolBar"/>
+            <p:contextMenu for="mapaFuncional" id="mapaContextMenu">
+                <p:menuitem value="Remover" icon="ui-icon-minusthick" actionListener="#{mapa.remove()}" update="mapaFuncional" oncomplete="addClass();"/>
+                <p:menuitem value="Renombrar" icon="ui-icon-pencil" actionListener="#{mapa.prepareRename()}" update=":ceDialog" oncomplete="dialogoCE.show()"/>
+                <p:separator />
+                <p:menuitem value="Copiar" icon="ui-icon-copy" actionListener="#{mapa.copy()}" update="mapaFuncional" oncomplete="addClass();"/>
+                <p:menuitem value="Pegar" icon="ui-icon-clipboard" actionListener="#{mapa.paste()}" update="mapaFuncional" oncomplete="addClass();"/>
+            </p:contextMenu>
+            <p:tree orientation="horizontal" var="funcion" selectionMode="single" styleClass="mapaFuncional"
+                    dynamic="true" id="mapaFuncional" widgetVar="mapaFuncional" 
+                    selection="#{mapa.selectedNode}" value="#{mapa.root}" animate="true" >
+
+                <p:ajax event="select" update=":mapaForm:mapaToolBar :mapaForm:stickyMapaToolBar" listener="#{mapa.onNodeSelect}"/>
+
+                <p:treeNode type="#{mapa.NODO_PROPOSITO_PRINCIPAL}">
+                    <div class="contenido">
+                        <span class="tipo"><h:outputText value="#{funcion.tipoFuncion.tipoFuncion}"/></span><br/>
+                        <span class="titulo"><h:outputText value="#{funcion.titulo}"/></span>
+                    </div>
+                </p:treeNode>
+
+                <p:treeNode type="#{mapa.NODO_FUNCION_CLAVE}">
+                    <div class="contenido">
+                        <span class="tipo"><h:outputText value="#{funcion.tipoFuncion.tipoFuncion}"/></span><br/>
+                        <span class="titulo"><h:outputText value="#{funcion.titulo}"/></span>
+                    </div>
+                </p:treeNode>
+
+                <p:treeNode type="#{mapa.NODO_FUNCION_INTERMEDIA}">
+                    <div class="contenido">
+                        <span class="tipo"><h:outputText value="#{funcion.tipoFuncion.tipoFuncion}"/></span><br/>
+                        <span class="titulo"><h:outputText value="#{funcion.titulo}"/></span>
+                    </div>
+                </p:treeNode>
+
+                <p:treeNode type="#{mapa.NODO_FUNCION_INDIVIDUAL}">
+                    <div class="contenido">
+                        <span class="tipo"><h:outputText value="#{funcion.tipoFuncion.tipoFuncion}"/></span><br/>
+                        <span class="titulo"><h:outputText value="#{funcion.titulo}"/></span>
+                    </div>
+                </p:treeNode>
+
+                <p:treeNode type="#{mapa.NODO_FUNCION_ELEMENTAL}">
+                    <div class="contenido">
+                        <span class="tipo"><h:outputText value="#{funcion.tipoFuncion.tipoFuncion}"/></span><br/>
+                        <span class="titulo"><h:outputText value="#{funcion.titulo}"/></span>
+                    </div>
+                </p:treeNode>
+            </p:tree>
+        </h:form>
+        <p:dialog id="ceDialog" header="#{mapa.tituloDialogo} #{mapa.selectedNode.data.titulo}" widgetVar="dialogoCE" 
+                      modal="true" resizable="false" closable="true" showEffect="puff" hideEffect="puff">
+            <h:form>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="titulo" value="Titulo:" /> 
+                    <p:inputText id="titulo" value="#{mapa.titulo}" />
+                    <h:outputLabel for="tipo" value="Tipo:" rendered="#{mapa.create}"/> 
+                    <p:selectOneMenu id="tipo" value="#{mapa.tipoFuncion}" rendered="#{mapa.create}" converter="#{mapa.tipoFuncionConverter}">
+                        <f:selectItems value="#{mapa.choosableTiposFuncion}" var="tipoFuncion" itemValue="#{tipoFuncion}" itemLabel="#{tipoFuncion.tipoFuncion}"/>
+                    </p:selectOneMenu>
+                    <f:facet name="footer">
+                        <p:commandButton id="btnSave" value="Guardar" update=":mapaForm:mapaFuncional" actionListener="#{mapa.rename()}" oncomplete="dialogoCE.hide(); addClass();" rendered="#{!mapa.create}"/>
+                        <p:commandButton id="btnAdd" value="Agregar" update=":mapaForm:mapaFuncional" actionListener="#{mapa.add()}" oncomplete="dialogoCE.hide(); addClass();" rendered="#{mapa.create}"/>
+                        <p:defaultCommand target="btnSave"/>
+                        <p:defaultCommand target="btnAdd"/>
+                    </f:facet>
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+        <p:dialog id="revisionDialog" header="Solicitar Revisión" widgetVar="dialogoRevision"
+              resizable="false" closable="true" showEffect="puff" hideEffect="puff">
+            <h:form>
+                <h:panelGrid columns="1" cellpadding="5">
+                    <h:outputLabel value="Redacte su mensaje:" />
+                    <p:inputTextarea rows="10" cols="50" required="true" label="Mensaje" 
+                                     maxlength="150" counter="limiteMensaje" counterTemplate="{0}"/>
+                    <h:outputText id="limiteMensaje"/>
+                    <f:facet name="footer">  
+                        <p:commandButton id="btnSendMenssage" value="Solicitar" update=":mapaForm:mapaFuncional" actionListener="#{mapa.solicitarRevision()}" oncomplete="dialogoRevision.hide(); addClass();"/>  
+                    </f:facet>  
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>
+

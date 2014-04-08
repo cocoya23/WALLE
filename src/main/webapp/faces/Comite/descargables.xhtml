@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <title>Descargables</title>
+        <ui:include src="/faces/head.xhtml"/>
+    </h:head>
+    <h:body>
+        <ui:include src="/faces/menu.xhtml"/>
+        <center>
+            <h:form id="formDescargables">
+                <p:panel header="Descarga de documentos">
+                    <h:panelGrid columns="3" cellpadding="5">
+                        <p:panel header="Formatos CGC">
+                            <h:panelGrid columns="2">
+                                <h:outputLabel value="Solicitud de integración del CGC" />
+                                <p:commandButton ajax="false" icon="ui-icon-arrowthickstop-1-s">  
+                                    <p:fileDownload value="#{descargable.archivo}"/>
+                                </p:commandButton>
+
+                                <h:outputLabel value="Solicitud para reestructuración del CGC" />
+                                <p:commandButton ajax="false" icon="ui-icon-arrowthickstop-1-s">  
+                                    <p:fileDownload value="#{descargable.archivo}"/>
+                                </p:commandButton>
+
+                                <h:outputLabel value="Presentación de integración del CGC" />
+                                <p:commandButton ajax="false" icon="ui-icon-arrowthickstop-1-s">  
+                                    <p:fileDownload value="#{descargable.archivo}"/>
+                                </p:commandButton>
+
+                                <h:outputLabel value="Presentación de reestructuración del CGC" />
+                                <p:commandButton ajax="false" icon="ui-icon-arrowthickstop-1-s">  
+                                    <p:fileDownload value="#{descargable.archivo}"/>
+                                </p:commandButton>
+
+                                <h:outputLabel value="Plan y metas del CGC" />
+                                <p:commandButton ajax="false" icon="ui-icon-arrowthickstop-1-s">  
+                                    <p:fileDownload value="#{descargable.archivo}"/>
+
+                                </p:commandButton>
+                            </h:panelGrid>
+                        </p:panel>
+                        <p:panel header="Formatos EC">
+                            <h:panelGrid columns="2">
+                                <h:outputLabel value="Carta cesión de derechos de IEC y EC" />
+                                <p:commandButton ajax="false" icon="ui-icon-arrowthickstop-1-s">  
+                                    <p:fileDownload value="#{descargable.archivo}"/>
+                                </p:commandButton>
+
+                                <h:outputLabel value="Informe de resultados de la Prueba Piloto" />
+                                <p:commandButton ajax="false" icon="ui-icon-arrowthickstop-1-s">  
+                                    <p:fileDownload value="#{descargable.archivo}"/>
+                                </p:commandButton>
+
+                                <h:outputLabel value="Solicitud de presentación del EC" />
+                                <p:commandButton ajax="false" icon="ui-icon-arrowthickstop-1-s">  
+                                    <p:fileDownload value="#{descargable.archivo}"/>
+                                </p:commandButton>
+
+                                <h:outputLabel value="Autorización de uso de logotipos" />
+                                <p:commandButton ajax="false" icon="ui-icon-arrowthickstop-1-s">  
+                                    <p:fileDownload value="#{descargable.archivo}"/>
+                                </p:commandButton>
+
+                            </h:panelGrid>
+                        </p:panel>
+                        <p:panel header="Documentos de apoyo">
+                            <h:panelGrid columns="2">
+                                <h:outputLabel value="ABC" />
+                                <p:commandButton ajax="false" icon="ui-icon-arrowthickstop-1-s">  
+
+                                </p:commandButton>
+
+                                <h:outputLabel value="SINCO" />
+                                <p:commandButton ajax="false" icon="ui-icon-arrowthickstop-1-s">  
+
+                                </p:commandButton>
+
+                                <h:outputLabel value="SCIAN" />
+                                <p:commandButton ajax="false" icon="ui-icon-arrowthickstop-1-s">  
+
+                                </p:commandButton>
+
+                                <h:outputLabel value="Reglas Generales" />
+                                <p:commandButton ajax="false" icon="ui-icon-arrowthickstop-1-s">  
+
+                                </p:commandButton>
+
+                            </h:panelGrid>
+                        </p:panel>
+                    </h:panelGrid>
+                </p:panel>
+            </h:form>
+        </center>
+    </h:body>
+</html>
+

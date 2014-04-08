@@ -1,0 +1,29 @@
+body{
+    margin: 0px;
+    padding: 0px;
+}
+.ui-widget{
+    font-size: 12px;
+}
+.msgError{
+    color: red;
+    font-size: 16px;
+}
+.menuBar .ui-menu-list{
+    z-index: 9999 !important;
+}
+.toolBar{
+    z-index: 999 !important;
+}
+.columnas{
+    float: left;
+}
+.pares{
+    width: 50%;
+}
+.titulo{
+    font-weight: bold;
+}
+.panelInteno{
+    margin-bottom: 15px;
+}

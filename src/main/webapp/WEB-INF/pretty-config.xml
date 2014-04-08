@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.3.0" 
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+               xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.3.0
+                                http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.3.0.xsd">
+
+    <url-mapping id="index">
+        <pattern value="/login" />
+        <view-id value="/index.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="home">
+        <pattern value="/" />
+        <view-id value="/faces/home.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="home">
+        <pattern value="/home" />
+        <view-id value="/faces/home.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="homeError">
+        <pattern value="/home/#{errorCode}" />
+        <view-id value="/faces/home.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="mapa">
+        <pattern value="/EC/mapa" />
+        <view-id value="/faces/EC/mapa.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="EC">
+        <pattern value="/EC/DatosGenerales" />
+        <view-id value="/faces/EC/ec.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="TC">
+        <pattern value="/EC/TablaEspecificaciones" />
+        <view-id value="/faces/EC/te.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="participantes">
+        <pattern value="/EC/participantes" />
+        <view-id value="/faces/EC/participantes.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="directorio">
+        <pattern value="/Directorio" />
+        <view-id value="/faces/Directorio/directorio.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="descargables">
+        <pattern value="/Comite/Descargables" />
+        <view-id value="/faces/Comite/descargables.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="informe">
+        <pattern value="/Comite/InformeGeneral" />
+        <view-id value="/faces/Comite/informe.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="reporte">
+        <pattern value="/Comite/Reporte" />
+        <view-id value="/faces/Comite/reporte.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="integracion">
+        <pattern value="/Comite/Integracion/#{integracion.tipo}" />
+        <view-id value="/faces/Comite/integracion_restructuracion.xhtml" />
+    </url-mapping>
+
+</pretty-config>

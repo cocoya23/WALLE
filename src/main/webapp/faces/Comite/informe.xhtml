@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <title>Informe del CGC</title>
+        <ui:include src="/faces/head.xhtml"/>
+    </h:head>
+    <h:body>
+        <ui:include src="/faces/menu.xhtml"/>
+        <p:panel header="Informe general de CGC {Nombre de CGC}" style="width: 900px;">
+            <p:panel header="General" styleClass="panelInteno">
+                <h:panelGrid columns="4" cellpadding="5">
+
+                    <h:outputText value="Certificados emitidos:" styleClass="titulo"/>
+                    <p:outputLabel value="##"/>
+
+                    <h:outputText value="Estado del CGC:" styleClass="titulo"/>
+                    <p:outputLabel value="Vigente"/>
+
+                    <h:outputText value="Fecha de integración:" styleClass="titulo"/>
+                    <p:outputLabel value="dd/MM/yyyy"/>
+
+                    <h:outputText value="Fecha de la ultima renovación:" styleClass="titulo"/>
+                    <p:outputLabel value="dd/MM/yyyy"/>
+
+                </h:panelGrid>
+            </p:panel>
+            <p:separator/>
+            <p:panel header="Integrantes vigentes" styleClass="panelInteno">
+                <h:panelGrid columns="4" cellpadding="5">
+                    <h:outputText value="Presidente:" styleClass="titulo"/>
+                    <h:outputLabel value="Nombre Apellido1 Apellido2 (Organización-cargo)"/>
+                    <h:outputText value="Vicepresidente:" styleClass="titulo"/>
+                    <h:outputLabel value="Nombre Apellido1 Apellido2 (Organización-cargo)"/>
+                </h:panelGrid>
+                <p:dataTable emptyMessage="Sin vocales">
+                    <f:facet name="header">
+                        Vocales
+                    </f:facet>
+
+                    <p:column headerText="Nombre completo">
+
+                    </p:column>
+
+                    <p:column headerText="Organización">
+
+                    </p:column>
+
+                    <p:column headerText="Cargo en la organización">
+                        Nombre Completo
+                    </p:column>
+
+                </p:dataTable>
+            </p:panel>
+            <p:separator/>
+            <p:panel header="Estándares de Competencia" styleClass="panelInteno">
+                <p:dataTable emptyMessage="Sin Estándares de Competencia publicados">
+                    <f:facet name="header">
+                        Aprobados por CT/Publicados en DOF
+                    </f:facet>
+
+                    <p:column headerText="Codigo">
+
+                    </p:column>
+
+                    <p:column headerText="Titulo">
+
+                    </p:column>
+
+                    <p:column headerText="Clase">
+
+                    </p:column>
+
+                    <p:column headerText="Nivel">
+
+                    </p:column>
+
+                    <p:column headerText="Fecha de aprobación por CT">
+
+                    </p:column>
+
+                    <p:column headerText="Fecha de publicación en DOF">
+
+                    </p:column>
+                    
+                    <p:column headerText="Fecha de inscripción en RENEC">
+
+                    </p:column>
+
+                    <p:column headerText="Certificados emitidos">
+
+                    </p:column>
+
+                </p:dataTable>
+
+                <p:dataTable emptyMessage="Sin Estándares de Competencia en desarrollo" style="margin-top: 5px;">
+                    <f:facet name="header">
+                        En desarrollo
+                    </f:facet>
+
+                    <p:column headerText="Nombre propuesto">
+
+                    </p:column>
+
+                </p:dataTable>
+            </p:panel>
+            <p:separator/>
+            <p:panel header="Certificados" styleClass="panelInteno">
+                
+                <p:dataTable emptyMessage="Sin certificados emitidos">
+                    
+                    <p:columnGroup type="header">
+                        <p:row>
+                            <p:column rowspan="2" headerText="Codigo"/>
+                            <p:column rowspan="2" headerText="Nombre"/>
+                            <p:column colspan="2" headerText="Periodo"/>
+                            <p:column rowspan="2" headerText="Comparativo"/>
+                        </p:row>
+                        <p:row>
+                            <p:column headerText="De"/>
+                            <p:column headerText="Hatsa:"/>
+                        </p:row>
+                    </p:columnGroup>
+                    
+                    
+                </p:dataTable>
+                
+            </p:panel>
+            <p:separator/>
+            <p:panel header="Soluciones de evaluación y certificación" styleClass="panelInteno">
+
+            </p:panel>
+            <p:separator/>
+            <p:panel header="Curso de capacitación" styleClass="panelInteno">
+
+            </p:panel>
+        </p:panel>
+    </h:body>
+</html>

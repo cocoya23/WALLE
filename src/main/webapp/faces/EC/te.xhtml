@@ -1,0 +1,166 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <title>Tabla de Especificaciones</title>
+        <ui:include src="/faces/head.xhtml"/>
+    </h:head>
+    <h:body>
+        <ui:include src="/faces/menu.xhtml"/>
+        <h:form id="FormTE">
+            <p:toolbar styleClass="toolBar" id="TEToolBar">
+                <p:toolbarGroup>
+                    <p:commandButton value="Agregar" onclick="elementoCADialog.show()"/>
+                    <p:commandButton value="Editar" />
+                    <p:commandButton value="Eliminar" onclick="elementoCADialog.show()"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+            <p:sticky target="TEToolBar" margin="40" id="stickyTEToolBar"/>
+            <h:panelGrid columns="1" cellpadding="5">
+
+                <p:dataTable selectionMode="single" id="elementosTable" emptyMessage="Sin elementos">
+
+                    <p:column headerText="No. Elemento">
+
+                    </p:column>
+                    <p:column headerText="Tipo criterio.">
+
+                    </p:column>
+                    <p:column headerText="No. Criterio">
+
+                    </p:column>
+                    <p:column headerText="Criterio de evaluación de desempeño">
+
+                    </p:column>
+                    <p:column headerText="Caracteristicas">
+
+                    </p:column>
+                    <p:column headerText="Identificacion">
+
+                    </p:column>
+                    <p:column headerText="Peso menor">
+
+                    </p:column>
+                    <p:column headerText="Peso medio">
+
+                    </p:column>
+                    <p:column headerText="Peso mayor">
+
+                    </p:column>
+                    <p:column headerText="Secuencia operativa">
+
+                    </p:column>
+                    <p:column headerText="Peso">
+
+                    </p:column>
+                    <p:column headerText="Tipo de IE">
+
+                    </p:column>
+                    <p:column headerText="No. IE">
+
+                    </p:column>
+
+
+                </p:dataTable>
+
+                <h:panelGrid columns="2" cellpadding="5">
+
+                    <p:panel header="Elementos">
+
+                        <h:panelGrid columns="2" cellpadding="5">
+
+                            <h:outputLabel value="1 de 2:"/>
+                            <h:outputLabel value="Titulo elemento 1"/>
+
+                            <h:outputLabel value="2 de 2:"/>
+                            <h:outputLabel value="Titulo elemento 2"/>
+
+                        </h:panelGrid>
+
+                    </p:panel>
+
+                    <p:panel header="Asignacion de pesos">
+
+                        <h:panelGrid columns="4" cellpadding="5">
+
+                            <h:outputLabel value=""/>
+                            <h:outputLabel value="Peso menor"/>
+                            <h:outputLabel value="Peso medio"/>
+                            <h:outputLabel value="peso mayor"/>
+
+                            <h:outputLabel value="Pesos relativos"/>
+                            <h:outputLabel value="#.##"/>
+                            <h:outputLabel value="#.##"/>
+                            <h:outputLabel value="#.##"/>
+
+                            <h:outputLabel value="Peso de reactivo"/>
+                            <h:outputLabel value="#.##"/>
+                            <h:outputLabel value="#.##"/>
+                            <h:outputLabel value="#.##"/>
+
+                            <h:outputLabel value="Peso total"/>
+                            <h:outputLabel value="#.##"/>
+                            <h:outputLabel value="#.##"/>
+                            <h:outputLabel value="#.##"/>
+
+                        </h:panelGrid>
+
+                    </p:panel>
+
+                </h:panelGrid>              
+
+
+            </h:panelGrid>
+        </h:form>
+        <h:form id="formElemento">
+            <p:dialog modal="true" widgetVar="elementoCADialog" header="Ocupaciones" resizable="false" closable="true">
+                <h:panelGrid columns="4" cellpadding="5" >
+
+                    <h:outputLabel value="No. Elemento:" />
+                    <p:selectOneMenu id="elemento">
+
+                    </p:selectOneMenu>
+
+                    <h:outputLabel value="Tipo de criterio:" />
+                    <p:selectOneMenu id="tipoCriterio">
+
+                    </p:selectOneMenu>
+
+                </h:panelGrid>
+                
+                <h:panelGrid columns="1" cellpadding="5" >
+
+                    <h:outputLabel value="Criterios:" />
+                    <p:inputTextarea id="criterios" rows="3" cols="60"/>
+
+                    <h:outputLabel value="Caracteristicas:" />
+                    <p:inputTextarea id="caracteristicas" rows="3" cols="60"/>
+
+                </h:panelGrid>
+                
+                <h:panelGrid columns="2" cellpadding="5">
+                    
+                    <h:outputLabel value="Peso:" />
+                    <h:outputLabel value="Secuencia operativa:" />
+                    
+                    <p:selectOneButton id="peso">
+                        <f:selectItem itemLabel="Menor" itemValue="min"/>
+                        <f:selectItem itemLabel="Medio" itemValue="mid"/>
+                        <f:selectItem itemLabel="Mayor" itemValue="max"/>
+                    </p:selectOneButton>
+                    <p:spinner id="secuencia" required="true" value="2" min="1" size="2"/>                    
+                    
+                </h:panelGrid>
+
+                <f:facet name="footer">
+                    <p:commandButton id="btnSaveCA" type="button" value="Guardar" icon="ui-icon-check" style="margin:0" onclick="elementoCADialog.hide()"/>
+                </f:facet>
+            </p:dialog>
+        </h:form>
+    </h:body>
+</html>

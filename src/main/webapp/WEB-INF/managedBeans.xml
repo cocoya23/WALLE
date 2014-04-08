@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+    
+    <bean id="usuario" class="gob.mx.conocer.walle.managed.UsuariosBean" scope="session"/>
+    <bean id="notificaciones" class="gob.mx.conocer.walle.managed.NotificacionesBean" scope="session"/>
+    <bean id="mapa" class="gob.mx.conocer.walle.managed.MapaFuncionalBean" scope="session"/>
+    <bean id="directorio" class="gob.mx.conocer.walle.managed.DirectorioBean" scope="session"/>
+
+</beans>

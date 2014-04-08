@@ -1,0 +1,189 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <title>Participantes</title>
+        <ui:include src="/faces/head.xhtml"/>
+    </h:head>
+    <h:body>
+        <ui:include src="/faces/menu.xhtml"/>
+        <h:form id="formParticipantes">
+            <p:toolbar styleClass="toolBar" id="participantesToolBar">
+                <p:toolbarGroup>
+                    <p:commandButton value="Eliminar" icon="ui-icon-minusthick" />
+                    <p:separator/>
+                    <h:outputText value="Estándar de Competencia: "/>
+                    <p:selectOneMenu style="width: 700px;">
+                    </p:selectOneMenu>
+                </p:toolbarGroup>
+            </p:toolbar>
+            <p:sticky target="participantesToolBar" margin="40" id="stickyParticipantesToolBar"/>
+            <table style="width: 900px;">
+                <tr>
+                    <td style="vertical-align: top;">
+                        <p:dataTable emptyMessage="Sin participantes" style="width: 900px;">
+
+                            <f:facet name="header">
+                                Participantes
+                            </f:facet>
+
+                            <p:columnGroup type="header">
+
+                                <p:row>
+                                    <p:column rowspan="2" headerText="Nombre"/>
+                                    <p:column colspan="4" headerText="Participo en:"/>
+                                    <p:column rowspan="2" headerText="Autor"/>
+                                    <p:column rowspan="2" headerText="% EC"/>
+                                    <p:column rowspan="2" headerText="% IEC"/>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column headerText="MF"/>
+                                    <p:column headerText="EC"/>
+                                    <p:column headerText="IEC"/>
+                                    <p:column headerText="PP"/>
+                                </p:row>
+
+                            </p:columnGroup>
+
+                            <p:columnGroup type="footer">
+
+                                <p:row>
+                                    <p:column colspan="6" style="text-align: right" footerText="Total:" />
+                                    <p:column footerText="0 %" />
+                                    <p:column footerText="0 %" />
+                                </p:row>
+
+                            </p:columnGroup>
+
+                        </p:dataTable>
+                    </td>
+                    <td>
+                        <p:panel style="min-width: 400px;">
+
+                            <f:facet name="header">
+                                Participante
+                            </f:facet>
+                            
+                            <f:facet name="actions">
+                                <p:commandButton value="Guardar" icon="ui-icon-disk"/>
+                            </f:facet>
+
+                            <h:panelGrid columns="2" cellpadding="3">
+
+                                <h:outputText value="Nombre:"/>
+                                <p:inputText required="true"/>
+
+                                <h:outputText value="Primer apellido:"/>
+                                <p:inputText required="true"/>
+
+                                <h:outputText value="Segundo apellido:"/>
+                                <p:inputText required="false"/>
+
+                                <h:outputText value="Organización:"/>
+                                <p:inputText required="true"/>
+
+                                <h:outputText value="Cargo en la organización:"/>
+                                <p:inputText required="true"/>
+
+                                <h:outputText value="Años que ha desempeñado la función que se estandariza:" style="width: 100px;"/>
+                                <p:spinner required="false" maxlength="2" min="0" max="50"/>
+
+                                <h:outputText value="Participo en:"/>
+                                <p:selectManyCheckbox>
+                                    <f:selectItem itemLabel="MF"/>
+                                    <f:selectItem itemLabel="EC"/>
+                                    <f:selectItem itemLabel="IEC"/>
+                                    <f:selectItem itemLabel="PP"/>
+                                </p:selectManyCheckbox>
+
+                                <h:outputLabel value="Es autor: " />
+                                <p:selectOneButton value="#{participante.showEsAutor}">
+                                    <f:selectItem itemLabel="No" itemValue="false" />
+                                    <f:selectItem itemLabel="Si" itemValue="true" />
+                                    <p:ajax update="panelAutorParticipante"/>
+                                </p:selectOneButton>
+
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="1" id="panelAutorParticipante">
+                                <h:panelGrid columns="2" cellpadding="3" rendered="#{participante.showEsAutor}">
+
+                                    <h:outputText value="CURP:"/>
+                                    <p:inputText required="true"/>
+
+                                    <h:outputText value="RFC:"/>
+                                    <p:inputText required="true"/>
+                                    
+                                    <h:outputText value="Fecha Nacimiento:"/>
+                                    <p:inputMask mask="99/99/9999"/>
+                                    
+                                    <h:outputText value="Nacionalidad:"/>
+                                    <p:inputText required="true"/>
+                                    
+                                    <h:outputText value="Teléfono:"/>
+                                    <p:inputText required="true"/>
+                                    
+                                    <h:outputText value="Email:"/>
+                                    <p:inputText required="true"/>
+                                    
+                                    <h:outputText value="Porcentaje EC:"/>
+                                    <p:spinner min="0" max="100" required="true"/>
+                                    
+                                    <h:outputText value="Porcentaje IEC:"/>
+                                    <p:spinner min="0" max="100" required="true"/>
+                                    
+                                    <h:outputText value="Carta de cesión de EC:"/>
+                                    <p:fileUpload mode="simple"/>
+                                    
+                                    <h:outputText value="Carta de cesión de IEC:"/>
+                                    <p:fileUpload mode="simple"/>
+
+                                </h:panelGrid>
+                                <p:panel id="panelDomicilioParticipante" header="Domicilio (particular o profesional)" rendered="#{participante.showEsAutor}">
+
+                                    <h:panelGrid columns="2" cellpadding="5" >
+
+                                        <h:outputLabel value="Extrajero:" />
+                                        <p:selectOneButton value="false">
+                                            <f:selectItem itemLabel="No" itemValue="false" />
+                                            <f:selectItem itemLabel="Si" itemValue="true" />
+                                            <p:ajax />
+                                        </p:selectOneButton>
+
+                                        <h:outputLabel value="Calle:" />
+                                        <p:inputText required="true" />
+
+                                        <h:outputLabel value="No. ext:" />
+                                        <p:inputText required="true" />
+
+                                        <h:outputLabel value="No. int:" />
+                                        <p:inputText />
+
+                                        <h:outputLabel value="Colonia:" />
+                                        <p:inputText required="true" />
+
+                                        <h:outputLabel value="Municipio/Delegación:" />
+                                        <p:inputText required="true" />
+
+                                        <h:outputLabel value="Entidad Federativa:" />
+                                        <p:inputText required="true" />
+
+                                        <h:outputLabel value="C.P.:" />
+                                        <p:inputText required="true" />
+
+                                    </h:panelGrid>
+                                </p:panel>
+                            </h:panelGrid>
+                        </p:panel>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+    </h:body>
+</html>

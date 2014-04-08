@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:body>
+        <ui:composition>
+            <p:growl showDetail="true" autoUpdate="true" widgetVar="growlInfo" escape="false" for="notification"/>
+            <p:growl showDetail="true" autoUpdate="true" sticky="true" widgetVar="growlNoty" escape="false" for="message"/>
+            <p:idleMonitor timeout="#{session.maxInactiveInterval*1000}" >
+                <p:ajax event="idle" listener="#{usuario.kickUser()}" oncomplete="location.replace('#{request.contextPath}/login?session=true');"/>
+            </p:idleMonitor>
+            <p:menubar autoDisplay="false" styleClass="menuBar" id="menuBar">
+                <p:menuitem url="/home" icon="ui-icon-home"/>
+                <c:if test="#{usuario.authority!='ROLE_COORDINADOR'}">
+                    <p:submenu label="Comite"  icon="ui-icon-bookmark">  
+                        <p:menuitem value="Descargables" url="/Comite/Descargables" icon="ui-icon-document"/>                        
+                        <p:menuitem value="Integración" url="/Comite/Integracion/Integracion" icon="ui-icon-bookmark"/>
+                        <p:submenu label="Restructuración" icon="ui-icon-refresh">
+                            <p:menuitem value="Restructuración" url="/Comite/Integracion/Restructuracion" icon="ui-icon-bookmark"/>
+                            <p:separator />
+                            <p:menuitem value="Ampliación de vigencias *" url="/home/build" icon="ui-icon-calendar"/>
+                            <p:menuitem value="Integrantes *" url="/home/build" icon="ui-icon-person"/>
+                            <p:menuitem value="Denominación *" url="/home/build" icon="ui-icon-bookmark"/>
+                        </p:submenu>
+                        <p:menuitem value="Reporte General " url="/Comite/Reporte" icon="ui-icon-folder-collapsed"/>
+                        <p:menuitem value="Informe" url="/Comite/InformeGeneral" icon="ui-icon-note"/>
+                    </p:submenu>
+                </c:if>
+                <p:submenu label="Estandares de Competencia" icon="ui-icon-note">  
+                    <p:menuitem value="Mapa Funcional" url="/EC/mapa" icon="ui-icon-clipboard"/>
+                    <p:separator />
+                    <p:menuitem value="Tabla de Especificaciones" url="/EC/TablaEspecificaciones" icon="ui-icon-calculator"/>
+                    <p:menuitem value="Instrumento de Evaluación *" url="/home/build" icon="ui-icon-document-b"/>
+                    <p:menuitem value="Estandar de Compentencia" url="/EC/DatosGenerales" icon="ui-icon-mail-closed"/>
+                    <c:if test="#{usuario.authority!='ROLE_COORDINADOR'}">
+                        <p:menuitem value="Participantes" url="/EC/participantes" icon="ui-icon-person"/>
+                        <p:separator />
+                        <p:submenu label="Actualizacion de Estándar de Competencia" icon="ui-icon-refresh">
+                            <p:menuitem value="Total *" url="/home/build" icon="ui-icon-refresh"/>
+                            <p:menuitem value="Instrumento de Evaluación *" url="/home/build" icon="ui-icon-document-b"/>
+                            <p:menuitem value="Vigencias *" url="/home/build" icon="ui-icon-calendar"/>
+                        </p:submenu>
+                    </c:if>
+                </p:submenu>
+                <c:if test="#{usuario.authority!='ROLE_COORDINADOR'}">
+                    <p:menuitem value="Directorio" url="/Directorio" icon="ui-icon-contact"/>
+                </c:if>
+                <f:facet name="options">
+                    <h:panelGrid columns="2">
+                        <p:clock mode="server" pattern="hh:mm:ss"/>
+                        <p:splitButton value="#{usuario.username}">
+                            <p:menuitem value="Notificaciones(historial)" url="/home/build" icon="ui-icon-mail-closed"/>
+                            <p:separator/>
+                            <p:menuitem value="Salir" url="/logout" icon="ui-icon-extlink"/>
+                        </p:splitButton>
+                    </h:panelGrid>
+                </f:facet>
+            </p:menubar>
+            <p:sticky target="menuBar"/>
+            <ui:include src="/faces/dialogos.xhtml"/>
+        </ui:composition>        
+    </h:body>
+    <!--
+    <p:separator />
+    <p:submenu label="Soporte Documental" icon="ui-icon-document">
+        <p:menuitem value="Soluciones de evaluación y certificación" url="/home/build" icon="ui-icon-shuffle"/>
+        <p:menuitem value="Certificados estimados a 3 años" url="/home/build" icon="ui-icon-calendar"/>
+        <p:submenu label="Logotipos y Plecas" icon="ui-icon-image">
+            <p:menuitem value="Logotipos" url="/home/build" icon="ui-icon-image"/>
+            <p:menuitem value="Plecas" url="/home/build" icon="ui-icon-image"/>
+        </p:submenu>
+    </p:submenu>
+    -->
+</html>
+
